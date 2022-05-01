@@ -11,7 +11,7 @@
 	<groupId>com.project1</groupId>
 	<artifactId>reimbursement-request-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>reimbursement-request-app</name>
+	<name>reimbursement-request-api</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>

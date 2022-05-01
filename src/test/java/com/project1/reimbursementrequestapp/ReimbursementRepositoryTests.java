@@ -9,12 +9,14 @@ import com.project1.reimbursementrequestapp.repositories.ManagerRepository;
 import com.project1.reimbursementrequestapp.repositories.ReimbursementRepo;
 import static org.junit.Assert.*;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @SpringBootTest
 public class ReimbursementRepositoryTests {
@@ -22,33 +24,44 @@ public class ReimbursementRepositoryTests {
     @Autowired
     private ReimbursementRepo reimbursementRepo;
 
-    private Reimbursement reimbursement;
+    Employee employee = Employee.builder()
+            .fullName("Freda Hon")
+            .email("freda@freda.com")
+            .build();
+
+    Manager manager = Manager.builder()
+            .fullName("Albus Dumbledore")
+            .email("dumbledore@hogwarts.com")
+            .build();
+
+    Reimbursement reimbursement = Reimbursement.builder()
+            .date("2022/04/22 22:16:30")
+            .description("Dinner")
+            .amount(50)
+            .status("Pending")
+            .submitDate("2022/04/28 22:16:30")
+            .employee(employee)
+            .manager(manager)
+            .build();
 
     @Test
-    public void saveReimbursementTest() {
+    public void shouldGetAllReimbursements(){
 
-        Employee employee = Employee.builder()
-                .fullName("Freda Hon")
-                .email("freda@freda.com")
-                .password("password")
-                .build();
+        List<Reimbursement> reimbursements = reimbursementRepo.findAll();
 
-        Manager manager = Manager.builder()
-                .fullName("Albus Dumbledore")
-                .email("dumbledore@hogwarts.com")
-                .password("password")
-                .build();
+        Assertions.assertTrue(reimbursements.size() > 0);
+    }
 
-        Reimbursement reimbursement = Reimbursement.builder()
-                .date("2022/04/22 22:16:30")
-                .description("Dinner")
-                .amount(50)
-                .status("Pending")
-                .submitDate("2022/04/28 22:16:30")
-                .employee(employee)
-                .manager(manager)
-                .build();
+    @Test
+    public void shouldGetReimbursementById(){
 
+        Reimbursement reimbursement = reimbursementRepo.findById(1).get();
+
+        Assertions.assertEquals(1, reimbursement.getId());
+    }
+
+    @Test
+    public void shouldSaveReimbursement() {
         reimbursementRepo.save(reimbursement);
 
         assertTrue(reimbursement.getId() > 0);
@@ -56,29 +69,7 @@ public class ReimbursementRepositoryTests {
 
     @Test
     @Transactional
-    public void shouldUpdateReimbursementStatusTest(){
-
-        Employee employee = Employee.builder()
-                .fullName("Freda Hon")
-                .email("freda@freda.com")
-                .password("password")
-                .build();
-
-        Manager manager = Manager.builder()
-                .fullName("Albus Dumbledore")
-                .email("dumbledore@hogwarts.com")
-                .password("password")
-                .build();
-
-        Reimbursement reimbursement = Reimbursement.builder()
-                .date("2022/04/22 22:16:30")
-                .description("Dinner")
-                .amount(50)
-                .status("Denied")
-                .submitDate("2022/04/28 22:16:30")
-                .employee(employee)
-                .manager(manager)
-                .build();
+    public void shouldUpdateReimbursementStatus(){
 
         reimbursementRepo.save(reimbursement);
 
@@ -90,7 +81,7 @@ public class ReimbursementRepositoryTests {
 
     @Test
     @Transactional
-    public void shouldUpdateReimbursementManagerTest(){
+    public void shouldUpdateReimbursementManager(){
 //
 //        Employee employee = Employee.builder()
 //                .fullName("Freda Hon")

@@ -2,6 +2,7 @@ package com.project1.reimbursementrequestapp.services;
 
 import com.project1.reimbursementrequestapp.ReimbursementRequestApplication;
 import com.project1.reimbursementrequestapp.dtos.ReimbursementDTO;
+import com.project1.reimbursementrequestapp.models.Email;
 import com.project1.reimbursementrequestapp.models.Employee;
 import com.project1.reimbursementrequestapp.models.Manager;
 import com.project1.reimbursementrequestapp.models.Reimbursement;
@@ -14,7 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
@@ -40,12 +43,11 @@ public class ReimbursementService {
         this.reimbursementRepo = reimbursementRepo;
     }
 
-//    public Reimbursement getReimbursementById(int id) {
-//
+//    public void findById(int id) {
 //        if (id <= 0 ) {
-//            return new Reimbursement(-1, "No reimbursement exists", -10);
+//            return "No reimbursement exists";
 //        } else {
-//            return Reimbursement;
+//            reimbursementRepo.findById(id);
 //        }
 //    }
 
@@ -79,6 +81,25 @@ public class ReimbursementService {
         Reimbursement newReimbursement = new Reimbursement(0, date, description, amount, "Pending", dateTime, employee, manager);
 
         reimbursementRepo.save(newReimbursement);
+
+        // create new email
+        Email email = new Email(
+                0,
+                dateTime,
+                manager.getEmail(),
+                employee.getEmail(),
+                "New Reimbursement Request",
+                newReimbursement.toString()
+        );
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Email> newEmail = restTemplate.postForEntity(
+                "http://localhost:9091/emails/new",
+                email,
+                Email.class
+        );
+        System.out.println(newEmail.getBody());
+//
+//        System.out.println(email);
 //        boolean success = reimbursementRepo.save(newReimbursement);
 //
 //        if (success == false) {
@@ -91,8 +112,11 @@ public class ReimbursementService {
      * @param dto - the reimbursement data transfer object
      */
     public void updateEntity(ReimbursementDTO dto, int id) {
+
         String managerName = dto.getManager_fullName();
+        String employeeName = dto.getEmployee_fullName();
         Manager manager = managerRepository.findByFullName(managerName);
+        Employee employee = employeeRepository.findByFullName(employeeName);
 
         String status = dto.getStatus();
 
@@ -101,5 +125,28 @@ public class ReimbursementService {
         logger.debug("Reimbursement id: {}", id);
 
         reimbursementRepo.updateReimbursementById(status, manager, id);
+
+        // create new email
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String dateTime = formatter.format(now);
+
+        String content = "A recent change has been made on your reimbursement request, ID: " + id;
+
+        Email email = new Email(
+                0,
+                dateTime,
+                employee.getEmail(),
+                manager.getEmail(),
+                "Update on Reimbursement Request",
+                content
+        );
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Email> newEmail = restTemplate.postForEntity(
+                "http://localhost:9091/emails/new",
+                email,
+                Email.class
+        );
+        System.out.println(newEmail.getBody());
     }
 }

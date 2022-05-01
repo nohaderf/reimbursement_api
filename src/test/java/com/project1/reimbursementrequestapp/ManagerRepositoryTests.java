@@ -19,12 +19,11 @@ public class ManagerRepositoryTests {
     private ManagerRepository managerRepository;
 
     @Test
-    public void  createManagerTest(){
+    public void  shouldSaveManagerTest(){
 
         Manager manager = Manager.builder()
                 .fullName("Albus Dumbledore")
                 .email("dumbledore@hogwarts.com")
-                .password("password")
                 .build();
 
         Manager newManager = managerRepository.save(manager);
@@ -33,7 +32,7 @@ public class ManagerRepositoryTests {
     }
 
     @Test
-    public void getManagerByIdTest(){
+    public void shouldGetManagerByIdTest(){
 
        Manager manager = managerRepository.findById(1).get();
 
@@ -49,7 +48,7 @@ public class ManagerRepositoryTests {
 //    }
 
     @Test
-    public void getAllEmployeesTest(){
+    public void shouldGetAllManagersTest(){
 
         List<Manager> managers = managerRepository.findAll();
 

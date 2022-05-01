@@ -1,6 +1,7 @@
 package com.project1.reimbursementrequestapp.controllers;
 
 import com.project1.reimbursementrequestapp.dtos.ReimbursementDTO;
+import com.project1.reimbursementrequestapp.models.Email;
 import com.project1.reimbursementrequestapp.models.Reimbursement;
 import com.project1.reimbursementrequestapp.repositories.ReimbursementRepo;
 import com.project1.reimbursementrequestapp.services.ReimbursementService;
@@ -10,7 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -30,7 +34,7 @@ public class ReimbursementController {
      * @return all reimbursement instances
      */
     @GetMapping
-    public ResponseEntity<List<Reimbursement>> getAllReimbursements () {
+    public ResponseEntity<List<Reimbursement>> getAllReimbursements() {
         logger.debug("Get all reimbursements: {}", reimbursementRepo.findAll());
         return ResponseEntity.ok(reimbursementRepo.findAll());
     }
@@ -74,6 +78,8 @@ public class ReimbursementController {
      * Create a new reimbursement -- by employee ✅
      * @param dto - the data transfer object
      */
+    // post request also creates a new email
+    // telling manager and employee that a new reimbursement request has been submitted
     @PostMapping("new")
     public void newReimbursement(@RequestBody ReimbursementDTO dto) {
         reimbursementService.convertToEntity(dto);
@@ -83,6 +89,8 @@ public class ReimbursementController {
      * Update reimbursement -- by manager ✅
      * @param dto - the data transfer object
      */
+    // put request creates a new email
+    // telling manager and employee that a new reimbursement request has been submitted
     @PutMapping("requests/{reimbursementId}")
     public void updateReimbursement(
             @RequestBody ReimbursementDTO dto,

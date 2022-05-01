@@ -21,12 +21,11 @@ public class EmployeeRepositoryTests {
     private EmployeeRepository employeeRepository;
 
     @Test
-    public void  createEmployeeTest(){
+    public void  shouldSaveEmployee(){
 
         Employee employee = Employee.builder()
                 .fullName("Freda Hon")
                 .email("freda@freda.com")
-                .password("password")
                 .build();
 
         Employee newEmployee = employeeRepository.save(employee);
@@ -35,7 +34,7 @@ public class EmployeeRepositoryTests {
     }
 
     @Test
-    public void getEmployeeTest(){
+    public void shouldGetEmployeeById(){
 
         Employee employee = employeeRepository.findById(1).get();
 
@@ -43,7 +42,7 @@ public class EmployeeRepositoryTests {
     }
 
     @Test
-    public void getAllEmployeesTest(){
+    public void shouldGetAllEmployees(){
 
         List<Employee> employees = employeeRepository.findAll();
 
