@@ -119,6 +119,6 @@ class ReimbursementTests {
 
     @Test
     void testHashCode() {
-        assertEquals(-1202876730, reimbursement.hashCode());
+        assertEquals(-1448402644, reimbursement.hashCode());
     }
 }

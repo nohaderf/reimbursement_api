@@ -24,25 +24,7 @@ public class ReimbursementRepositoryTests {
     @Autowired
     private ReimbursementRepo reimbursementRepo;
 
-    Employee employee = Employee.builder()
-            .fullName("Freda Hon")
-            .email("freda@freda.com")
-            .build();
-
-    Manager manager = Manager.builder()
-            .fullName("Albus Dumbledore")
-            .email("dumbledore@hogwarts.com")
-            .build();
-
-    Reimbursement reimbursement = Reimbursement.builder()
-            .date("2022/04/22 22:16:30")
-            .description("Dinner")
-            .amount(50)
-            .status("Pending")
-            .submitDate("2022/04/28 22:16:30")
-            .employee(employee)
-            .manager(manager)
-            .build();
+    private Reimbursement reimbursement;
 
     @Test
     public void shouldGetAllReimbursements(){
@@ -62,6 +44,27 @@ public class ReimbursementRepositoryTests {
 
     @Test
     public void shouldSaveReimbursement() {
+
+        Employee employee = Employee.builder()
+                .fullName("Freda Hon")
+                .email("freda@freda.com")
+                .build();
+
+        Manager manager = Manager.builder()
+                .fullName("Albus Dumbledore")
+                .email("dumbledore@hogwarts.com")
+                .build();
+
+        Reimbursement reimbursement = Reimbursement.builder()
+                .date("2022/04/22 22:16:30")
+                .description("Dinner")
+                .amount(50)
+                .status("Pending")
+                .submitDate("2022/04/28 22:16:30")
+                .employee(employee)
+                .manager(manager)
+                .build();
+
         reimbursementRepo.save(reimbursement);
 
         assertTrue(reimbursement.getId() > 0);
@@ -70,6 +73,26 @@ public class ReimbursementRepositoryTests {
     @Test
     @Transactional
     public void shouldUpdateReimbursementStatus(){
+
+        Employee employee = Employee.builder()
+                .fullName("Freda Hon")
+                .email("freda@freda.com")
+                .build();
+
+        Manager manager = Manager.builder()
+                .fullName("Albus Dumbledore")
+                .email("dumbledore@hogwarts.com")
+                .build();
+
+        Reimbursement reimbursement = Reimbursement.builder()
+                .date("2022/04/22 22:16:30")
+                .description("Dinner")
+                .amount(50)
+                .status("Denied")
+                .submitDate("2022/04/28 22:16:30")
+                .employee(employee)
+                .manager(manager)
+                .build();
 
         reimbursementRepo.save(reimbursement);
 

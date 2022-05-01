@@ -57,11 +57,11 @@ class EmployeeTests {
 
     @Test
     void testHashCode() {
-        assertEquals(-1121270007, employee.hashCode());
+        assertEquals(178756714, employee.hashCode());
     }
 
     @Test
     void testToString() {
-        assertEquals("Employee(id=1, fullName=Freda Hon, email=freda@freda.com, password=password)", employee.toString());
+        assertEquals("Employee(id=1, fullName=Freda Hon, email=freda@freda.com)", employee.toString());
     }
 }

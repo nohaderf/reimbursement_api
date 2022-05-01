@@ -56,11 +56,11 @@ class ManagerTests {
 
     @Test
     void testHashCode() {
-        assertEquals(-1796510138, manager.hashCode());
+        assertEquals(-1434201263, manager.hashCode());
     }
 
     @Test
     void testToString() {
-        assertEquals("Manager(id=1, fullName=Albus Dumbledore, email=dumbledore@hogwarts.com, password=password)", manager.toString());
+        assertEquals("Manager(id=1, fullName=Albus Dumbledore, email=dumbledore@hogwarts.com)", manager.toString());
     }
 }
