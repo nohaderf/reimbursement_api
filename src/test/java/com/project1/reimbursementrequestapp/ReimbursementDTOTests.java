@@ -1,70 +1,109 @@
 package com.project1.reimbursementrequestapp;
 
+import com.project1.reimbursementrequestapp.dtos.ReimbursementDTO;
+import com.project1.reimbursementrequestapp.models.Reimbursement;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ReimbursementDTOTests {
 
+    private ReimbursementDTO dto = ReimbursementDTO.builder()
+            .date("2022/04/22 22:16:30")
+            .description("Dinner")
+            .amount(50)
+            .status("Pending")
+            .submitDate("2022/04/28 22:16:30")
+            .employee_fullName("Harry Potter")
+            .manager_fullName("Albus Dumbledore")
+            .build();
+
+    private Reimbursement reimbursement;
+
     @Test
-    void testEquals() {
+    void shouldGetDate() {
+        assertEquals("2022/04/22 22:16:30", dto.getDate());
     }
 
     @Test
-    void testHashCode() {
+    void shouldGetDescription() {
+        assertEquals("Dinner", dto.getDescription());
     }
 
     @Test
-    void getDate() {
+    void shouldGetAmount() {
+        assertEquals(50, dto.getAmount());
     }
 
     @Test
-    void getDescription() {
+    void shouldGetStatus() {
+        assertEquals("Pending", dto.getStatus());
     }
 
     @Test
-    void getAmount() {
+    void shouldGetSubmitDate() {
+        assertEquals("2022/04/28 22:16:30", dto.getSubmitDate());
     }
 
     @Test
-    void getStatus() {
+    void shouldGetEmployeeFullName() {
+        assertEquals("Harry Potter", dto.getEmployee_fullName());
     }
 
     @Test
-    void getSubmitDate() {
+    void shouldGetManagerFullName() {
+        assertEquals("Albus Dumbledore", dto.getManager_fullName());
     }
-
-    @Test
-    void getEmployee_fullName() {
-    }
-
-    @Test
-    void getManager_fullName() {
-    }
-
-    @Test
-    void setDate() {
-    }
-
-    @Test
-    void setDescription() {
-    }
-
-    @Test
-    void setAmount() {
-    }
-
-    @Test
-    void setStatus() {
-    }
-
-    @Test
-    void setEmployee_fullName() {
-    }
-
-    @Test
-    void setManager_fullName() {
-    }
-
-    @Test
-    void testToString() {
-    }
+//
+//    @Test
+//    void shouldSetId() {
+//        reimbursement.setId(2);
+//
+//        assertEquals(2, reimbursement.getId());
+//    }
+//
+//    @Test
+//    void shouldSetDate() {
+//        reimbursement.setDate("2022/04/20 12:16:30");
+//
+//        assertEquals("2022/04/20 12:16:30", reimbursement.getDate());
+//    }
+//
+//    @Test
+//    void shouldSetDescription() {
+//        reimbursement.setDescription("Uber");
+//
+//        assertEquals("Uber", reimbursement.getDescription());
+//    }
+//
+//    @Test
+//    void shouldSetAmount() {
+//        reimbursement.setAmount(67);
+//
+//        assertEquals(67, reimbursement.getAmount());
+//    }
+//
+//    @Test
+//    void shouldSetStatus() {
+//        reimbursement.setStatus("Approved");
+//
+//        assertEquals("Approved", reimbursement.getStatus());
+//    }
+//
+//    @Test
+//    void shouldSetSubmitDate() {
+//        reimbursement.setSubmitDate("2022/04/29 16:16:53");
+//
+//        assertEquals("2022/04/29 16:16:53", reimbursement.getSubmitDate());
+//    }
+//
+//    @Test
+//    void testEquals() {
+//        assertEquals(false, reimbursement.equals("hello"));
+//    }
+//
+//    @Test
+//    void testHashCode() {
+//        assertEquals(-1448402644, reimbursement.hashCode());
+//    }
 }
